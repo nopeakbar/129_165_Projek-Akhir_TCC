@@ -1,66 +1,37 @@
 steps:
-  # Step 1: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
+  # 0.
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "${_ENV}", ".env"]
+    dir: "backend"
+
+ # 1. Build Docker image untuk backend
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/project-backend:${SHORT_SHA}", "."]
+    dir: "backend"
+
+  # 2. Push ke Container Registry / Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/project-backend:${SHORT_SHA}"]
+    
+  # 3. Deploy ke Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: gcloud
     args:
-      - 'build'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/buku-tukar-backend:$COMMIT_SHA'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/buku-tukar-backend:latest'
-      - '.'
-    dir: 'backend'
+      [
+        "run",
+        "deploy", 
+        "project-backend",
+        "--image",
+        "gcr.io/$PROJECT_ID/project-backend:${SHORT_SHA}",
+        "--timeout",
+        "1000s",
+        "--port",
+        "5003",
+        "--region",
+        "us-central1",
+        "--allow-unauthenticated",
+      ]
 
-  # Step 2: Push the Docker image to Google Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/buku-tukar-backend:$COMMIT_SHA'
-
-  # Step 3: Push the latest tag
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/buku-tukar-backend:latest'
-
-  # Step 4: Deploy to Cloud Run (optional - uncomment if you want to deploy)
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: gcloud
-  #   args:
-  #     - 'run'
-  #     - 'deploy'
-  #     - 'buku-tukar-backend'
-  #     - '--image'
-  #     - 'gcr.io/$PROJECT_ID/buku-tukar-backend:$COMMIT_SHA'
-  #     - '--region'
-  #     - 'asia-southeast2'
-  #     - '--platform'
-  #     - 'managed'
-  #     - '--allow-unauthenticated'
-  #     - '--port'
-  #     - '5010'
-  #     - '--set-env-vars'
-  #     - 'NODE_ENV=production'
-  #     - '--memory'
-  #     - '512Mi'
-  #     - '--cpu'
-  #     - '1'
-  #     - '--max-instances'
-  #     - '10'
-
-# Specify machine type for better performance
+# Log hanya akan disimpan di Google Cloud Logging
 options:
-  machineType: 'E2_HIGHCPU_8'
   logging: CLOUD_LOGGING_ONLY
-
-# Images to be pushed to registry
-images:
-  - 'gcr.io/$PROJECT_ID/buku-tukar-backend:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/buku-tukar-backend:latest'
-
-# Timeout for the entire build
-timeout: '1200s'
-
-# Substitutions (can be overridden when triggering the build)
-substitutions:
-  _SERVICE_NAME: 'buku-tukar-backend'
-  _REGION: 'asia-southeast2'
