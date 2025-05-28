@@ -1,0 +1,15 @@
+runtime: nodejs22
+service: frontend-buku-tukar
+instance_class: F1
+
+handlers:
+  - url: /assets
+    static_dir: dist/assets
+
+  - url: /(.*\.(js|css|map|json|png|jpg|jpeg|gif|ico|svg|webp))
+    static_files: dist/\1
+    upload: dist/.*\.(js|css|map|json|png|jpg|jpeg|gif|ico|svg|webp)
+
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
