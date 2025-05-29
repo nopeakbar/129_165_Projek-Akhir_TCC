@@ -1,10 +1,11 @@
-import express from 'express'
-import { addExchangeHistory, getAllExchangeHistory, getExchangeHistoryById } from '../controllers/ExchangeHistoryController.js'
-import { authMiddleware } from '../middleware/authMiddleware.js'
-const router = express.Router()
+import express from 'express';
+import { addExchangeHistory, getAllExchangeHistory, getExchangeHistoryById } from '../controllers/ExchangeHistoryController.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
 
-router.post('/', authMiddleware, addExchangeHistory)
-router.get('/', authMiddleware,getAllExchangeHistory)
-router.get('/:id', authMiddleware,getExchangeHistoryById)
+const router = express.Router();
 
-export default router
+router.post('/', authMiddleware, addExchangeHistory);
+router.get('/', authMiddleware, getAllExchangeHistory);
+router.get('/:id', authMiddleware, getExchangeHistoryById);
+
+export default router;

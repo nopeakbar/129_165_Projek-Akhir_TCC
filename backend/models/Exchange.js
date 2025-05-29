@@ -1,10 +1,8 @@
 // src/models/Exchange.js
-import { DataTypes } from 'sequelize'
-import sequelize from '../config/database.js'
-import User from './User.js'
-import Book from './Book.js'
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
-const Exchange = sequelize.define('Exchange', {
+const Exchange = sequelize.define("Exchange", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -13,84 +11,44 @@ const Exchange = sequelize.define('Exchange', {
   requesterId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'requesterId',
-    references: {
-      model: User,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
+    field: "requesterId"
   },
-
   ownerId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'ownerId',
-    references: {
-      model: User,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
+    field: "ownerId"
   },
-
   offeredBookId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'offeredBookId',
-    references: {
-      model: Book,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
+    field: "offeredBookId"
   },
-
   requestedBookId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'requestedBookId',
-    references: {
-      model: Book,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
+    field: "requestedBookId"
   },
-
   messages: {
     type: DataTypes.TEXT,
-    allowNull: true,
-    field: 'messages'
+    allowNull: true
   },
-
   location: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    field: 'location'
+    type: DataTypes.STRING(255),
+    allowNull: true
   },
-
   meetingDatetime: {
     type: DataTypes.DATE,
     allowNull: true,
-    field: 'meeting_datetime'
+    field: "meetingDatetime"
   },
-
   status: {
-    type: DataTypes.ENUM(
-      'pending',
-      'accepted',
-      'declined',
-      'cancelled',
-      'completed'
-    ),
+    type: DataTypes.ENUM('pending', 'accepted', 'declined', 'cancelled', 'completed'),
     allowNull: false,
-    defaultValue: 'pending',
-    field: 'status'
+    defaultValue: 'pending'
   }
 }, {
-  tableName: 'exchanges',
+  tableName: "exchanges",
   timestamps: true
-})
+});
 
-export default Exchange
+export default Exchange;
