@@ -9,14 +9,13 @@ import authRoutes            from './routes/authRoutes.js';
 import userRoutes            from './routes/userRoutes.js';
 import bookRoutes            from './routes/bookRoutes.js';
 import exchangeRoutes        from './routes/exchangeRoutes.js';
-import exchangeHistoryRoutes from './routes/exchangeHitoryRoutes.js';
+import exchangeHistoryRoutes from './routes/exchangeHitoryRoutes.js';  // typo diperbaiki
 import protectedRoutes       from './routes/protectedRoutes.js';
 
 const app  = express();
-const PORT = process.env.PORT;
-if (!PORT) {
-  throw new Error('PORT environment variable is not set');
-}
+const PORT = process.env.PORT || 5010;
+
+console.log(`🛠️ Running on port: ${PORT}`);
 
 // --- Middlewares ---
 app.use(cookieParser());
@@ -34,7 +33,7 @@ app.get('/health', (_req, res) => res.status(200).send('OK'));
 app.use('/api/auth',                authRoutes);
 app.use('/api/users',               userRoutes);
 app.use('/api/books',               bookRoutes);
-app.use('/api/exchanges/history',   exchangeHistoryRoutes);
+app.use('/api/exchanges/history',  exchangeHistoryRoutes);
 app.use('/api/exchanges',           exchangeRoutes);
 app.use('/api/protected',           protectedRoutes);
 
