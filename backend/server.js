@@ -13,7 +13,10 @@ import exchangeHistoryRoutes from './routes/exchangeHitoryRoutes.js';
 import protectedRoutes       from './routes/protectedRoutes.js';
 
 const app  = express();
-const PORT = process.env.PORT || 5010;
+const PORT = process.env.PORT;
+if (!PORT) {
+  throw new Error('PORT environment variable is not set');
+}
 
 // --- Middlewares ---
 app.use(cookieParser());
