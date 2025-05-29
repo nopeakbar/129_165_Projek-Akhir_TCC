@@ -9,10 +9,12 @@ import authRoutes            from './routes/authRoutes.js';
 import userRoutes            from './routes/userRoutes.js';
 import bookRoutes            from './routes/bookRoutes.js';
 import exchangeRoutes        from './routes/exchangeRoutes.js';
-import exchangeHistoryRoutes from './routes/exchangeHitoryRoutes.js';  // typo diperbaiki
+import exchangeHistoryRoutes from './routes/exchangeHistoryRoutes.js';  // pastikan nama file sesuai, typo sudah diperbaiki
 import protectedRoutes       from './routes/protectedRoutes.js';
 
 const app  = express();
+
+// Ambil PORT dari environment variable (Cloud Run akan set ini), default ke 5010 hanya saat lokal
 const PORT = process.env.PORT || 5010;
 
 console.log(`🛠️ Running on port: ${PORT}`);
@@ -63,6 +65,7 @@ app.use((err, _req, res, _next) => {
     console.log('✅ Database synced.');
 
     console.log('🚀 Starting server...');
+    // Listen pada port dari env variable supaya cocok dengan Cloud Run
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server listening on http://0.0.0.0:${PORT}`);
     });

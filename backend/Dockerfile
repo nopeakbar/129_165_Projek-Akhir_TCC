@@ -8,7 +8,7 @@ COPY . .
 RUN npm ci --omit=dev
 
 # Port disesuaikan dengan server.js (5010 atau PORT dari env)
-EXPOSE 5010
+EXPOSE 5003
 
 # Jalankan app
 CMD ["node", "server.js"]
