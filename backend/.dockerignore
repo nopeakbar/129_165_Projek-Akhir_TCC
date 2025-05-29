@@ -60,7 +60,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file (keep .env.example if you have one)
-.env
+# .env
 .env.test
 .env.local
 .env.production
