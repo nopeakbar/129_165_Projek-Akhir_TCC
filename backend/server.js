@@ -9,7 +9,7 @@ import authRoutes            from './routes/authRoutes.js';
 import userRoutes            from './routes/userRoutes.js';
 import bookRoutes            from './routes/bookRoutes.js';
 import exchangeRoutes        from './routes/exchangeRoutes.js';
-import exchangeHistoryRoutes from './routes/exchangeHitoryRoutes.js';  // pastikan nama file sesuai, typo sudah diperbaiki
+import exchangeHistoryRoutes from './routes/exchangeHistoryRoutes.js';  // pastikan nama file sesuai, typo sudah diperbaiki
 import protectedRoutes       from './routes/protectedRoutes.js';
 
 const app  = express();
