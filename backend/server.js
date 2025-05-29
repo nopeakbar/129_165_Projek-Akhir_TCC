@@ -14,7 +14,7 @@ import protectedRoutes       from './routes/protectedRoutes.js';
 
 const app  = express();
 
-// Ambil PORT dari environment variable (Cloud Run akan set ini), default ke 5010 hanya saat lokal
+// Ambil PORT dari environment variable (Cloud Run akan set ini), default ke 5003 hanya saat lokal
 const PORT = process.env.PORT || 5003;
 
 console.log(`🛠️ Running on port: ${PORT}`);
@@ -65,6 +65,8 @@ app.use((err, _req, res, _next) => {
     console.log('✅ Database synced.');
 
     console.log('🚀 Starting server...');
+    console.log(`🛠️ Server will listen on port: ${PORT}`); // debug port di sini juga
+
     // Listen pada port dari env variable supaya cocok dengan Cloud Run
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server listening on http://0.0.0.0:${PORT}`);

@@ -2,12 +2,15 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
-# Gunakan npm ci agar build stabil dan cepat
+# Install dependencies secara bersih (npm ci), tanpa dev dependencies
 RUN npm ci --omit=dev
 
-# Port disesuaikan dengan server.js (5010 atau PORT dari env)
+# Copy seluruh source code setelah install dependencies (cache lebih optimal)
+COPY . .
+
+# Expose port sesuai yang server.js pakai, misal 5003
 EXPOSE 5003
 
 # Jalankan app
