@@ -4,6 +4,7 @@ steps:
     args: ["cp", "${_ENV}", ".env"]
     dir: "backend"
 
+ # 1. Build Docker image untuk backend
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/buku-tukar:${SHORT_SHA}", "."]
     dir: "backend"
@@ -25,7 +26,7 @@ steps:
         "--timeout",
         "1000s",
         "--port",
-        "5003",
+        "5010",
         "--region",
         "us-central1",
         "--allow-unauthenticated",
